@@ -21,15 +21,14 @@ export function DashboardForm(page, setPage, endTokenUpdateTraking) {
 				}
 				else {
 					const tdata = await response.json()
-					console.log()
 					var dataArray = [ 0, 0, 0, 0, 0, 0, 0 ]
-					tdata.actions.forEach(e => dataArray[e.weekday-1] += Number(e.action));
+					tdata.actions.forEach(e => dataArray[e.weekday] += Number(e.action));
 					setData(dataArray)
 				}
 			}
 			loadWeekData();
 		}
-    },[page, date])
+    },[page, temp])
 
     useEffect(() => {
         const timer = setInterval(()=>{
@@ -42,6 +41,17 @@ export function DashboardForm(page, setPage, endTokenUpdateTraking) {
         }
     });
 
+	const sendAction = async (ms) => {
+		const response = await storeAction(String(ms))
+		if (!response.ok) {
+			alert(response.status)
+		}
+		else {
+			alert("Данные отправленны")
+		}
+	}
+
+
     function Run() {
 		setRunning(true)
         setTemp(new Date() - date)
@@ -52,7 +62,7 @@ export function DashboardForm(page, setPage, endTokenUpdateTraking) {
 
 	function Stop() {
 		setRunning(false)
-		storeAction(date)
+		sendAction(date)
 		setDate(0);
 		setTemp(null);
 	}

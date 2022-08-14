@@ -69,7 +69,7 @@ export const removeAccount = async (password) => {
 }
 
 export const storeAction = async (action) => {
-    const response = await fetch(urlBase+"account/remove", {
+    const response = await fetch(urlBase+"action/store", {
         method: 'post',
         headers: {
             'Content-Type':'application/json',
