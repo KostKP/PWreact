@@ -70,13 +70,13 @@ export function DashboardForm(page, setPage, endTokenUpdateTraking) {
     const formatTime = (ms) => { // format hh:mm:ss
         const ss = Math.floor(ms / 1000) % 60;
         const mm = Math.floor(ms / 60000) % 60;
-        const hh = Math.floor(ms / 360000) % 60;
+        const hh = Math.floor(ms / 3600000) % 60;
         return (hh > 9 ? hh : '0' + hh) + ':' + (mm > 9 ? mm : '0' + mm) + ':' + (ss > 9 ? ss : '0' + ss);
       }
 
 	const ColumnItem = (ms, day) => { // every column that shows hours per day
 		const mm = Math.floor(ms / 60000) % 60;
-        const hh = Math.floor(ms / 360000) % 60;
+        const hh = Math.floor(ms / 3600000) % 60;
 		return (
 			<div className={styles.statsItem}>
 				<span className={styles.statsH}>{day}</span>
