@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styles from '../css/Dashboard.module.css';
-import { getToken, getUser, removeUserSession} from './auth/AuthMgmt';
+import { getUser, removeUserSession} from './auth/AuthMgmt';
 import { requestWeekStats, storeAction } from './FetchHandler';
 import animate from '../css/Animate.module.css'
 
@@ -12,7 +12,7 @@ export function DashboardForm(page, setPage, endTokenUpdateTraking) {
     const [temp,setTemp] = useState(null);
 
 	useEffect(() => {
-		if (page === "dashboard") {
+		if (page === "dashboard") { // triger on paage change to dashboard
 			const loadWeekData = async () => {
 				const response = await requestWeekStats()
 				if (!response.ok) {
@@ -52,7 +52,7 @@ export function DashboardForm(page, setPage, endTokenUpdateTraking) {
 	}
 
 
-    function Run() {
+    function Run() { // run timer
 		setRunning(true)
         setTemp(new Date() - date)
     }
@@ -60,21 +60,21 @@ export function DashboardForm(page, setPage, endTokenUpdateTraking) {
         setTemp(null)
     }
 
-	function Stop() {
+	function Stop() { //timer stop
 		setRunning(false)
-		sendAction(date)
+		sendAction(date) //send value to server
 		setDate(0);
 		setTemp(null);
 	}
 
-    const formatTime = (ms) => {
+    const formatTime = (ms) => { // format hh:mm:ss
         const ss = Math.floor(ms / 1000) % 60;
         const mm = Math.floor(ms / 60000) % 60;
         const hh = Math.floor(ms / 360000) % 60;
         return (hh > 9 ? hh : '0' + hh) + ':' + (mm > 9 ? mm : '0' + mm) + ':' + (ss > 9 ? ss : '0' + ss);
       }
 
-	const ColumnItem = (ms, day) => {
+	const ColumnItem = (ms, day) => { // every column that shows hours per day
 		const mm = Math.floor(ms / 60000) % 60;
         const hh = Math.floor(ms / 360000) % 60;
 		return (

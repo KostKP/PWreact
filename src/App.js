@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { getUser, getToken, getTokenId, removeUserSession, setUserSession } from './js/auth/AuthMgmt.js';
 import AuthFormLogin from './js/auth/AuthFormLogin.js';
 import AuthFormRegister from './js/auth/AuthFormRegister.js';
-import AccountRemoveForm from './js/auth/AccountRemoveForm.js';
+import AccountRemoveForm from './js/AccountRemoveForm.js';
 import { refrashAccessToken } from './js/FetchHandler.js';
 import { useEffectOnce, useInterval } from './js/CustomHook'
 
@@ -13,18 +13,18 @@ function App() {
   const [delay, setDelay] = useState(null);
 
   useInterval(() => {
-    updateToken()
+    updateToken() 
   }, delay);
 
   function startTokenUpdateTraking() {
-    setDelay(7000000) //7200000
+    setDelay(7000000) //Token refrash time 2h
   }
 
   function endTokenUpdateTraking() {
-    setDelay(null)
+    setDelay(null)  //stop refrash token interval
   }
   function isTokenUpdateTraking() {
-    if (delay === null) return false;
+    if (delay === null) return false; //start refrash token interval
     return true
   }
 
@@ -42,7 +42,7 @@ function App() {
       const response = await refrashAccessToken()
       if (response.status===202) {
         const data = await response.json()
-        setUserSession(getUser(), data.token, data.id)
+        setUserSession(getUser(), data.token, data.id) 
         setPage("dashboard")
         if (isTokenUpdateTraking() === false) startTokenUpdateTraking()
     } else {
@@ -56,7 +56,7 @@ function App() {
     } catch (error) {alert("Не удаётся получить доступ у серверу")}
   }
 
-  function init() {
+  function init() { //triggger on page load
     const token = getToken();
     const id = getTokenId();
     if (!token || !id) {
@@ -68,7 +68,7 @@ function App() {
     }
   }
 
-  useEffectOnce(() => {
+  useEffectOnce(() => { //React strict mode calls standart hook twice
     init()
   },[])
 

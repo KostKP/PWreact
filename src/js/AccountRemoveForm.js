@@ -1,7 +1,7 @@
-import styles from '../../css/AccountRemove.module.css';
+import styles from '../css/AccountRemove.module.css';
 import { useRef } from 'react';
-import { removeAccount } from '../FetchHandler';
-import { removeUserSession} from '../auth/AuthMgmt'
+import { removeAccount } from './FetchHandler';
+import { removeUserSession} from './auth/AuthMgmt'
 
 const AccountRemoveForm = (setPage, endTokenUpdateTraking) => {
     const inputRefPassword = useRef(null);
